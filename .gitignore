@@ -360,3 +360,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Bof.Stat.DCS.Converter.Console/Properties/launchSettings.json

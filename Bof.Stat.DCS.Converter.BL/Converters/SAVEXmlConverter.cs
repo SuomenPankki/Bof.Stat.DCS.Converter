@@ -13,10 +13,8 @@ namespace Bof.Stat.DCS.Converter.BL.Converters
 
         }
 
-        public override string GetFilename()
-        {
-            return $"{xmlFile.Survey}_{xmlFile.Report.ReportPeriodEnd.DateToPeriod(xmlFile.Report.Frequency)}_{xmlFile.Report.DataProviderIdentifier}_{xmlFile.Report.ReporterIdentifier}_{xmlFile.Report.CreationDate.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)}.CSV";
-        }
+        public override string GetFilename() => GetFilenameWithProvider();
+
 
         protected override string GetReport()
         {

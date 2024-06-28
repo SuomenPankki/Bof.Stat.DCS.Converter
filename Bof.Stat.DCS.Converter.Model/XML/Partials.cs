@@ -1,4 +1,6 @@
-﻿namespace Bof.Stat.DCS.Converter.Model.XML.SAVE
+﻿using Bof.Stat.DCS.Converter.Model.CSV;
+
+namespace Bof.Stat.DCS.Converter.Model.XML.SAVE
 {
     public partial class SaveReport : IXmlReport
     {
@@ -84,6 +86,60 @@ namespace Bof.Stat.DCS.Converter.Model.XML.PEF
 
         public string Frequency => Header.Frequency;
 
-        public int RowCount => PefRecords.Count + 1 + 1; //Ifrecords.count = 1
+        public int RowCount => PefRecords.Count + 1 + 1;
     }
 }
+
+namespace Bof.Stat.DCS.Converter.Model.XML.TIHA
+{
+    public partial class TihaReport : IXmlReport
+    {
+        public string ReporterIdentifier => Header.ReporterIdentifier;
+
+        public string DataProviderIdentifier => Header.DataProviderIdentifier;
+
+        public DateTime CreationDate => Header.CreationDate;
+
+        public DateTime ReportPeriodEnd => Header.ReportingPeriodEnd;
+
+        public string Frequency => Header.Frequency;
+
+        public int RowCount => SbsRecords.Count + 1;
+    }
+}
+
+namespace Bof.Stat.DCS.Converter.Model.XML.MURA
+{
+    public partial class MuraReport : IXmlReport
+    {
+        public string ReporterIdentifier => Header.ReporterIdentifier;
+
+        public string DataProviderIdentifier => Header.DataProviderIdentifier;
+
+        public DateTime CreationDate => Header.CreationDate;
+
+        public DateTime ReportPeriodEnd => Header.ReportingPeriodEnd;
+
+        public string Frequency => Header.Frequency;
+
+        public int RowCount => LdRecords.Count + RestRecords.Count + SbsRecords.Count + (BsRecords is not null ? 1 : 0) + 1;
+    }
+}
+
+    namespace Bof.Stat.DCS.Converter.Model.XML.SIRA
+    {
+        public partial class SiraReport : IXmlReport
+        {
+            public string ReporterIdentifier => Header.ReporterIdentifier;
+
+            public string DataProviderIdentifier => Header.ManagementCompanyIdentifier;
+
+            public DateTime CreationDate => Header.CreationDate;
+
+            public DateTime ReportPeriodEnd => Header.ReportingPeriodEnd;
+
+            public string Frequency => Header.Frequency;
+
+            public int RowCount => ItemRecords.Count + SbsRecords.Count + 1 + 1;
+        }
+    }

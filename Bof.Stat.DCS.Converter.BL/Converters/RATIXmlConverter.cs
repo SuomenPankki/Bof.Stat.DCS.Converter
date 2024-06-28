@@ -13,7 +13,7 @@ namespace Bof.Stat.DCS.Converter.BL.Converters
 
         }
 
-        public override string GetFilename() => GetDefaultFilename();
+        public override string GetFilename() => GetFilenameWithProvider();
 
         protected override string GetReport()
         {

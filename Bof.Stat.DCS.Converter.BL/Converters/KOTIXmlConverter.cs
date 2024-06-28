@@ -17,8 +17,10 @@ namespace Bof.Stat.DCS.Converter.BL.Converters
         }
 
         public override string GetFilename()
-        {  
-            return $"{(isKoia ? SurveyEnum.KOIA : SurveyEnum.KOTI)}_{xmlFile.Report.ReportPeriodEnd.DateToPeriod(xmlFile.Report.Frequency)}_{xmlFile.Report.ReporterIdentifier}_{xmlFile.Report.CreationDate.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)}.CSV";
+        {
+            var ts = GetTimeStampFromFilename();
+
+            return $"{(isKoia ? SurveyEnum.KOIA : SurveyEnum.KOTI)}_{xmlFile.Report.ReportPeriodEnd.DateToPeriod(xmlFile.Report.Frequency)}_{xmlFile.Report.ReporterIdentifier}_{xmlFile.Report.CreationDate.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)}_{ts}.CSV";
         }
 
         protected override string GetReport()

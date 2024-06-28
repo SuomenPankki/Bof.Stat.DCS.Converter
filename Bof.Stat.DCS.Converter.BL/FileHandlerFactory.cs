@@ -6,6 +6,9 @@ using Bof.Stat.DCS.Converter.Model.XML.MAPE;
 using Bof.Stat.DCS.Converter.Model.XML.RATI;
 using Bof.Stat.DCS.Converter.Model.XML.SAVE;
 using Bof.Stat.DCS.Converter.Model.XML.PEF;
+using Bof.Stat.DCS.Converter.Model.XML.TIHA;
+using Bof.Stat.DCS.Converter.Model.XML.SIRA;
+using Bof.Stat.DCS.Converter.Model.XML.MURA;
 using NLog;
 using System.Xml.Linq;
 
@@ -32,6 +35,9 @@ namespace Bof.Stat.DCS.Converter.BL
                         SurveyEnum.SAVE => new SAVECsvFileHandler(filename),
                         SurveyEnum.RATI => new RATICsvFileHandler(filename),
                         SurveyEnum.PEF => new PEFCsvFileHandler(filename),
+                        SurveyEnum.TIHA => new TIHACsvFileHandler(filename),
+                        SurveyEnum.SIRA => new SIRACsvFileHandler(filename),
+                        SurveyEnum.MURA => new MURACsvFileHandler(filename),
                         _ => throw new NotImplementedException($"CSV filehandler not implemented for survey {survey}"),
                     };
                 }
@@ -47,6 +53,9 @@ namespace Bof.Stat.DCS.Converter.BL
                         Namespaces.RATI => new XmlFileHandler<RatiReport>(filename, SurveyEnum.RATI),
                         Namespaces.SAVE => new XmlFileHandler<SaveReport>(filename, SurveyEnum.SAVE),
                         Namespaces.PEF => new XmlFileHandler<PefReport>(filename, SurveyEnum.PEF),
+                        Namespaces.TIHA => new XmlFileHandler<TihaReport>(filename, SurveyEnum.TIHA),
+                        Namespaces.SIRA => new XmlFileHandler<SiraReport>(filename, SurveyEnum.SIRA),
+                        Namespaces.MURA => new XmlFileHandler<MuraReport>(filename, SurveyEnum.MURA),
                         _ => throw new NotImplementedException($"XML filehandler not implemented for namespace {ns.NamespaceName}"),
                     };
                 }

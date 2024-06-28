@@ -1,25 +1,25 @@
 ﻿using AutoMapper;
 using Bof.Stat.DCS.Converter.Model.CSV;
-using Bof.Stat.DCS.Converter.Model.CSV.PEF;
+using Bof.Stat.DCS.Converter.Model.CSV.SIRA;
 using Bof.Stat.DCS.Converter.Model.Mappings;
-using Bof.Stat.DCS.Converter.Model.Mappings.PEF;
+using Bof.Stat.DCS.Converter.Model.Mappings.SIRA;
 using Bof.Stat.DCS.Converter.Model.XML;
-using Bof.Stat.DCS.Converter.Model.XML.PEF;
+using Bof.Stat.DCS.Converter.Model.XML.SIRA;
 using System.Collections.ObjectModel;
 using System.Globalization;
 
 namespace Bof.Stat.DCS.Converter.BL
 {
-    public class PEFCsvConverter : CsvConverterBase
+    public class SIRACsvConverter : CsvConverterBase
     {
-        public PEFCsvConverter(CsvFile csvFile) : base(csvFile)
+        public SIRACsvConverter(CsvFile csvFile) : base(csvFile)
         {
 
         }
 
         protected override AutoMappingBase GetAutoMapping()
         {
-            return new PEFAutoMapping();
+            return new SIRAAutoMapping();
         }
 
         protected override string GetFilename(IXmlReport report)
@@ -29,17 +29,16 @@ namespace Bof.Stat.DCS.Converter.BL
 
         protected override List<IXmlReport> GetXmlReports(CsvFile csvFile, IMapper mapper)
         {
-            var funds = csvFile.DataRows.OfType<PEF_IF>().Select(x => new { x.TypeOfReporterIdentifier, x.ReporterIdentifier, x.ReporterName }).ToList();
+            var funds = csvFile.DataRows.OfType<SIRA_IF>().Select(x => new { x.TypeOfReporterIdentifier, x.ReporterIdentifier, x.ReporterName }).ToList();
             var reports = new List<IXmlReport>();
 
             if (funds.Count < 1) throw new ArgumentException("No IF-records found from the file");
 
             foreach (var fund in funds)
             {
-                var report = new PefReport
+                var report = new SiraReport
                 {
                     SchemaVersion = "1.0",
-
                     Header = mapper.Map<HeaderType>(csvFile.Header)
                 };
 
@@ -48,15 +47,17 @@ namespace Bof.Stat.DCS.Converter.BL
                 report.Header.ReporterName = fund.ReporterName;
                 report.Header.EntitysComment = csvFile.Header.EntitysComment;
 
-                if (mapper.Map<IfType>(csvFile.DataRows.OfType<PEF_IF>().Where(x => x.ReporterIdentifier == fund.ReporterIdentifier).SingleOrDefault()) is IfType iffi)
+                if (mapper.Map<IfType>(csvFile.DataRows.OfType<SIRA_IF>().Where(x => x.ReporterIdentifier == fund.ReporterIdentifier).SingleOrDefault()) is IfType iffi)
                 {
-                    report.IfRecords = new PefReportIfRecords()
+                    report.IfRecords = new SiraReportIfRecords()
                     {
                         If = iffi
                     };
                 }
 
-                report.PefRecords = mapper.Map<Collection<PefType>>(csvFile.DataRows.OfType<PEF_PEF>().Where(x => x.ReporterIdentifier == fund.ReporterIdentifier).ToList()) is Collection<PefType> pef && pef.Count > 0 ? pef : null;
+                report.SbsRecords = mapper.Map<Collection<SbsType>>(csvFile.DataRows.OfType<SIRA_SBS>().Where(x => x.ReporterIdentifier == fund.ReporterIdentifier).ToList()) is Collection<SbsType> sbs && sbs.Count > 0 ? sbs : null;
+                report.ItemRecords = mapper.Map<Collection<ItemType>>(csvFile.DataRows.OfType<SIRA_ITEM>().Where(x => x.ReporterIdentifier == fund.ReporterIdentifier).ToList()) is Collection<ItemType> item && item.Count > 0 ? item : null;
+                
                 reports.Add(report);
             }
 

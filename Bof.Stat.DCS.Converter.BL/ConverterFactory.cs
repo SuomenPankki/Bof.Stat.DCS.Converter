@@ -24,6 +24,9 @@ namespace Bof.Stat.DCS.Converter.BL
                         SurveyEnum.RATI => new RATICsvConverter(csvFile),
                         SurveyEnum.KOTI or SurveyEnum.KOIA => new KOTICsvConverter(csvFile),
                         SurveyEnum.PEF => new PEFCsvConverter(csvFile),
+                        SurveyEnum.TIHA => new TIHACsvConverter(csvFile),
+                        SurveyEnum.SIRA => new SIRACsvConverter(csvFile),
+                        SurveyEnum.MURA => new MURACsvConverter(csvFile),
                         _ => throw new NotImplementedException($"Conversion of survey {csvFile.Survey} not implemented"),
                     };
                 }
@@ -36,6 +39,9 @@ namespace Bof.Stat.DCS.Converter.BL
                         SurveyEnum.MAPE => new MAPEXmlConverter(xmlFile),
                         SurveyEnum.RATI => new RATIXmlConverter(xmlFile),
                         SurveyEnum.PEF => new PEFXmlConverter(xmlFile),
+                        SurveyEnum.TIHA  => new TIHAXmlConverter(xmlFile),
+                        SurveyEnum.SIRA => new SIRAXmlConverter(xmlFile),
+                        SurveyEnum.MURA => new MURAXmlConverter(xmlFile),
                         _ => throw new NotImplementedException($"Conversion of survey {xmlFile.Survey} not implemented")
                     };
                 }
