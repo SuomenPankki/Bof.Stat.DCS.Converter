@@ -46,27 +46,32 @@ namespace Bof.Stat.DCS.Converter.Common
 
         public static DateTime? PeriodToDate(this string period)
         {
+            int month;
+
             if (period.Contains("A"))
             {
-                return new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(6, 1)) * 12, 1).AddMonths(1).AddDays(-1);
+                month = int.Parse(period.Substring(6, 1)) * 12;
             }
             else if (period.Contains("H"))
             {
-                return new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(6, 1)) * 6, 1).AddMonths(1).AddDays(-1);
+                month = int.Parse(period.Substring(6, 1)) * 6;
             }
             else if (period.Contains("Q"))
             {
-                return new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(6, 1)) * 3, 1).AddMonths(1).AddDays(-1);
+                month = int.Parse(period.Substring(6, 1)) * 3;
             }
             else if (period.Contains("M"))
             {
                 int len = period.Length - 5;
-                return new DateTime(int.Parse(period.Substring(0, 4)), int.Parse(period.Substring(5, len)), 1).AddMonths(1).AddDays(-1);
-            }
-            else
-            {
+                month = int.Parse(period.Substring(5, len));
+            } else {
+                // should we throw if period doesn't contain A, H, Q, or M ?
                 return null;
             }
+
+            int year = int.Parse(period.Substring(0, 4));
+
+            return new DateTime(year, month, 1).AddMonths(1).AddDays(-1);
         }
 
         public static string GetYesNo(this bool value)
