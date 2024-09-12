@@ -59,7 +59,7 @@ namespace Bof.Stat.DCS.Converter.BL
 
         public string GetDefaultFilename(IXmlReport report)
         {
-            return $"{csvFile.Header.DataProviderIdentifier}_{csvFile.Header.TypeOfDataProviderIdentifier}_{csvFile.Header.Frequency}_{csvFile.Survey}_{csvFile.Header.ReportingPeriodEnd.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}_{csvFile.Header.CreationDate.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)}000.XML";
+            return $"{csvFile.Header.ReporterIdentifier}_{csvFile.Header.TypeOfReporterIdentifier}_{csvFile.Header.Frequency}_{csvFile.Survey}_{csvFile.Header.ReportingPeriodEnd.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}_{csvFile.Header.CreationDate.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)}000.XML";
         }
     }
 }
