@@ -27,6 +27,7 @@ namespace Bof.Stat.DCS.Converter.BL.Handlers
                     case "000":
                         csvFile.Header = csvReader.GetRecord<Header>();
                         csvFile.Header.SurveyCode = SurveyEnum.MURA.ToString();
+                        csvFile.Header.Frequency = FrequencyEnum.Q.ToString();
                         break;
                     case "BS":
                         var bs = csvReader.GetRecord<MURA_BS>();

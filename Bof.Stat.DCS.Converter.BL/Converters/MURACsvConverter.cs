@@ -22,7 +22,7 @@ namespace Bof.Stat.DCS.Converter.BL
 
         protected override string GetFilename(IXmlReport report)
         {
-            return $"{csvFile.Header.ReporterIdentifier}_{csvFile.Header.TypeOfReporterIdentifier}_{csvFile.Header.Frequency}_{csvFile.Survey}_{csvFile.Header.ReportingPeriodEnd.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}_{csvFile.Header.CreationDate.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)}000.XML";
+            return $"{csvFile.Header.ReporterIdentifier}_{csvFile.Header.TypeOfReporterIdentifier}_Q_{csvFile.Survey}_{csvFile.Header.ReportingPeriodEnd.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture)}_{csvFile.Header.CreationDate.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)}000.XML";
         }
 
         protected override List<IXmlReport> GetXmlReports(CsvFile csvFile, IMapper mapper)
@@ -45,7 +45,7 @@ namespace Bof.Stat.DCS.Converter.BL
             report.RestRecords = mapper.Map<Collection<RestType>>(csvFile.DataRows.OfType<MURA_REST>().ToList()) is Collection<RestType> rest && rest.Count > 0 ? rest : null;
             report.SbsRecords = mapper.Map<Collection<SbsType>>(csvFile.DataRows.OfType<MURA_SBS>().ToList()) is Collection<SbsType> sbs && sbs.Count > 0 ? sbs : null;
 
-            return new List<IXmlReport>() { report};
+            return new List<IXmlReport>() { report };
         }
     }
 }
